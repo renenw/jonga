@@ -21,6 +21,10 @@
       <span v-if="photoCount" class="guidance">Filtered Images: {{filteredCount}}</span>
     </p>
 
+    <p>
+      <span class="header">Log To</span><br/><input v-model="logToUrl" placeholder="URL to log image actions at" style="width:90%;" name="logToUrl" />
+    </p>
+
     <p><span class="header">Speed (ms)</span><br/><input v-model.number="speed" placeholder="ms per slide" type="number" /></p>
 
     <p v-show="!errors.has('source')"><button @click="apply">Apply</button></p>
@@ -44,7 +48,8 @@ export default {
       from: this.settings.from,
       to: this.settings.to,
       filter: this.settings.filter,
-      speed: this.settings.speed
+      speed: this.settings.speed,
+      logToUrl: this.settings.logToUrl
     };
   },
   methods: {
@@ -56,6 +61,7 @@ export default {
           to: this.to,
           filter: this.filter,
           speed: this.speed,
+          logToUrl: this.logToUrl,
           defaultSettings: false
         }
       });
