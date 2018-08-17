@@ -127,6 +127,25 @@ export default {
     updateCurrentPhotoData: function (photoData) {
       this.currentPhotoData = photoData;
       this.$emit('actionParams', {stars: photoData.stars});
+      this.logToServer(photoData);
+    },
+    logToServer: function (photoData) {
+      if (this.photosSettings.logToUrl) {
+        let data = {
+          'url': photoData.url,
+          'stars': photoData.stars,
+          'count': photoData.count,
+          'manualRotation': photoData.manualRotation
+        };
+        fetch(this.photosSettings.logToUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          cache: 'no-cache',
+          headers: { 'Content-Type': 'application/json' },
+          referrer: 'no-referrer',
+          body: JSON.stringify(data)
+        });
+      }
     },
     nextPhoto: function () { this.skip(true) },
     previousPhoto: function () { this.skip(false) },
