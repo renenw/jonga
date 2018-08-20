@@ -4,9 +4,10 @@
 
       <Stars :stars="stars" />
 
-      <div class="section">
-        <div class="header">Filename</div>
-        <div v-if="imageName">{{imageName}} <a v-bind:href="src"><icon name="external-link-alt" target="_blank"></icon></a></div>
+      <div v-if="imageName" class="section">
+        <div class="header">File</div>
+        <div>{{imageName}} <a v-bind:href="src"><icon name="external-link-alt" target="_blank"></icon></a></div>
+        <div>{{imagePath}}</div>
       </div>
 
       <div class="section" v-if="when && when.isValid()">
@@ -90,6 +91,10 @@ export default {
     imageName: function () {
       let parts = (this.src || '').split('/');
       return decodeURIComponent(parts[parts.length - 1]);
+    },
+    imagePath: function () {
+      let parts = (this.src || '').split('/');
+      return parts.slice(3, -1).map(e => decodeURIComponent(e)).join('/');
     },
     when: function () {
       if (this.exifData) {
